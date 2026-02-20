@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXE Launcher Dashboard</title>
+    <!-- Modern Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="glow-bg"></div>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo">
+                <div class="pulse-indicator" id="status-indicator"></div>
+                <h1>EXE <span>Launcher</span></h1>
+            </div>
+            <div class="status-badge" id="status-badge">HORS LIGNE</div>
+        </header>
+
+        <!-- Controls Section -->
+        <div class="controls panel">
+            <h2>Panneau de Contrôle</h2>
+            <p class="subtitle">Lancez votre exécutable (.exe) et surveillez son état.</p>
+
+            <div class="input-group" style="margin-bottom: 20px;">
+                <label for="exe-path"
+                    style="display: block; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">Chemin de
+                    l'exécutable (ex: C:\mondossier\monapp.exe)</label>
+                <input type="text" id="exe-path" placeholder="Chemin vers le fichier .exe"
+                    style="width: 100%; max-width: 600px;"
+                    value="C:\Users\User\Documents\Aces Open Telegram\winamax_scraper_telegram.exe">
+            </div>
+
+            <div class="button-group">
+                <button id="btn-start" class="btn btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                    </svg>
+                    Démarrer
+                </button>
+                <button id="btn-stop" class="btn btn-danger" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    </svg>
+                    Arrêter
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Layout -->
+        <div class="dashboard-grid">
+
+            <!-- Error messages Panel -->
+            <div class="error-panel panel">
+                <div class="panel-header" style="border-bottom: none; margin-bottom: 0px; padding-bottom: 0;">
+                    <h3 style="color: var(--danger); display: flex; align-items: center; gap: 8px;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="8" x2="12" y2="12"></line>
+                            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                        </svg>
+                        Dernier Message d'Erreur (Crash)
+                    </h3>
+                </div>
+                <div class="terminal-body" id="last-error-box"
+                    style="margin-top: 15px; background: rgba(255, 51, 68, 0.05); border: 1px solid rgba(255, 51, 68, 0.2); white-space: pre-wrap; height: 150px; color: #ff8a8a;">
+                    Aucune erreur enregistrée pour le moment.
+                </div>
+            </div>
+
+            <!-- Terminal Logs -->
+            <div class="terminal panel">
+                <div class="terminal-header">
+                    <h3>Journal de bord (Logs de l'exe)</h3>
+                    <div class="terminal-actions">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                </div>
+                <div class="terminal-body" id="logs-container">
+                    <div class="log-line">En attente de connexion...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

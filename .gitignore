@@ -1,0 +1,7 @@
+*.exe
+__pycache__/
+*.log
+sent_notifications.txt
+exe_logs.txt
+winamax_aces.json
+winamax_aces_past.json
