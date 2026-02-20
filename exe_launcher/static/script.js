@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const logsContainer = document.getElementById('logs-container');
     const lastErrorBox = document.getElementById('last-error-box');
 
+    const btnStart = document.getElementById('btn-start');
+    const btnStop = document.getElementById('btn-stop');
+
     // State
     let isRunning = false;
     let autoScroll = true;
