@@ -5,24 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const logsContainer = document.getElementById('logs-container');
     const lastErrorBox = document.getElementById('last-error-box');
 
-    const btnStart = document.getElementById('btn-start');
-    const btnStop = document.getElementById('btn-stop');
-    const exePathInput = document.getElementById('exe-path');
-
     // State
     let isRunning = false;
     let autoScroll = true;
-
-    // Load saved path if any
-    const savedPath = localStorage.getItem('exePath');
-    if (savedPath && savedPath.trim() !== '') {
-        exePathInput.value = savedPath;
-    }
-
-    // Save path upon change
-    exePathInput.addEventListener('input', () => {
-        localStorage.setItem('exePath', exePathInput.value);
-    });
 
     // Fetch initial status and populate logs
     fetchStatus();
@@ -32,18 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event Listeners for Controls
     btnStart.addEventListener('click', async () => {
-        const path = exePathInput.value.trim();
-        if (!path) {
-            alert('Veuillez entrer le chemin de l\'exécutable (.exe)');
-            return;
-        }
-
         try {
             btnStart.disabled = true;
             const res = await fetch('/api/start', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ exe_path: path })
+                body: JSON.stringify({})
             });
             const data = await res.json();
 

@@ -72,10 +72,13 @@ def start_bot():
     if EXE_PROCESS is not None and EXE_PROCESS.poll() is None:
         return jsonify({'status': 'error', 'message': 'Un programme est déjà en cours d\'exécution.'})
     
-    data = request.json
-    exe_path = data.get('exe_path', '').strip()
+    # Auto-detect executable based on environment
+    if os.name == 'nt':
+        exe_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'winamax_scraper_telegram.exe')
+    else:
+        exe_path = '/app/linux_scraper'
     
-    if not exe_path or not os.path.exists(exe_path):
+    if not os.path.exists(exe_path):
         return jsonify({'status': 'error', 'message': f'Fichier introuvable: {exe_path}'})
 
     with open(LOG_FILE, 'w', encoding='utf-8') as f:
