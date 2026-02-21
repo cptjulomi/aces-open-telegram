@@ -1036,6 +1036,18 @@ func main() {
 			jsonStr = jsonStr[idx:]
 		}
 
+		jsonStr = strings.TrimSpace(jsonStr)
+		if !strings.HasSuffix(jsonStr, "]]") {
+			jsonStr += "]]"
+		}
+
+		jsonStr, err = jsonrepair.RepairJSON(jsonStr)
+		if err != nil {
+			log.Println("Failed to repair JSON:", err)
+			sendLog("⚠️ Erreur réparation JSON - retry...")
+			continue
+		}
+
 		var arr []interface{}
 		if err := json.Unmarshal([]byte(jsonStr), &arr); err != nil {
 			log.Println("JSON parse error:", err)
@@ -1185,7 +1197,13 @@ func main() {
 
 			var finalBets []Bet
 			for _, b := range bets {
-				bet := b.(map[string]interface{})
+				if b == nil {
+					continue
+				}
+				bet, ok := b.(map[string]interface{})
+				if !ok {
+					continue
+				}
 
 				// check if contains nombre d'aces
 				betTypeName, _ := bet["betTypeName"].(string)
